@@ -34,18 +34,25 @@ function playRound(humanChoice, computerChoice) {
     if (humanChoice === 'rock' && computerChoice === 'scissors' ||
         humanChoice === 'paper' && computerChoice === 'rock' ||
         humanChoice === 'scissors' && computerChoice === 'paper') {
-            outcome = 'win';
+            outcome = `You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}.`;
     } else if (
         humanChoice === 'rock' && computerChoice === 'paper' ||
         humanChoice === 'paper' && computerChoice === 'scissors' ||
         humanChoice === 'scissors' && computerChoice === 'rock') {
-            outcome = 'lose';
+            outcome = `You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}.`;
     } else {
-        outcome = 'draw';
+        outcome = `${capitalize(computerChoice)} vs ${capitalize(humanChoice)}. It's a tie!`;
     }
 
-    console.log(humanChoice, computerChoice);
     console.log(outcome);
 }
 
 playRound(getHumanChoice(), getComputerChoice());
+
+
+
+//Utility functions below
+
+function capitalize(str) {
+    return str.replace(str[0], str[0].toUpperCase());
+}
