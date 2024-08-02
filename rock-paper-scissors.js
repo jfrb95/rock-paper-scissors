@@ -25,31 +25,54 @@ function getHumanChoice() {
     }
 };
 
-let humanScore = 0;
-let computerScore = 0;
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
 
-function playRound(humanChoice, computerChoice) {
-    let outcome;
-
-    if (humanChoice === 'rock' && computerChoice === 'scissors' ||
-        humanChoice === 'paper' && computerChoice === 'rock' ||
-        humanChoice === 'scissors' && computerChoice === 'paper') {
-            outcome = `You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}.`;
-    } else if (
-        humanChoice === 'rock' && computerChoice === 'paper' ||
-        humanChoice === 'paper' && computerChoice === 'scissors' ||
-        humanChoice === 'scissors' && computerChoice === 'rock') {
-            outcome = `You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}.`;
-    } else {
-        outcome = `${capitalize(computerChoice)} vs ${capitalize(humanChoice)}. It's a tie!`;
+    for (let i = 1; i < 6; ++i) {
+        console.log(`Round ${i}`);
+        const result = playRound(getHumanChoice(), getComputerChoice());
+        if (result === 'human') {
+            humanScore += 1;
+        } else if (result === 'computer') {
+            computerScore += 1;
+        }
     }
 
-    console.log(outcome);
+    if (humanScore > computerScore) {
+        console.log(`Congratulations, you win!`);
+    } else if (computerScore > humanScore) {
+        console.log(`Unlucky! You lose.`)
+    } else {
+        console.log(`It's a draw overall!`)
+    }
+
+    function playRound(humanChoice, computerChoice) {
+        let outcomeText;
+        let roundWinner;
+
+        if (humanChoice === 'rock' && computerChoice === 'scissors' ||
+            humanChoice === 'paper' && computerChoice === 'rock' ||
+            humanChoice === 'scissors' && computerChoice === 'paper') {
+                outcomeText = `You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}.`;
+                roundWinner = 'human';
+        } else if (
+            humanChoice === 'rock' && computerChoice === 'paper' ||
+            humanChoice === 'paper' && computerChoice === 'scissors' ||
+            humanChoice === 'scissors' && computerChoice === 'rock') {
+                outcomeText = `You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}.`;
+                roundWinner = 'computer';
+        } else {
+            outcomeText = `${capitalize(computerChoice)} vs ${capitalize(humanChoice)}. It's a tie!`;
+            roundWinner = null;
+        }
+
+        console.log(outcomeText);
+        return roundWinner;
+    }
 }
 
-playRound(getHumanChoice(), getComputerChoice());
-
-
+playGame();
 
 //Utility functions below
 
