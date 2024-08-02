@@ -25,4 +25,27 @@ function getHumanChoice() {
     }
 };
 
-console.log(getHumanChoice());
+let humanScore = 0;
+let computerScore = 0;
+
+function playRound(humanChoice, computerChoice) {
+    let outcome;
+
+    if (humanChoice === 'rock' && computerChoice === 'scissors' ||
+        humanChoice === 'paper' && computerChoice === 'rock' ||
+        humanChoice === 'scissors' && computerChoice === 'paper') {
+            outcome = 'win';
+    } else if (
+        humanChoice === 'rock' && computerChoice === 'paper' ||
+        humanChoice === 'paper' && computerChoice === 'scissors' ||
+        humanChoice === 'scissors' && computerChoice === 'rock') {
+            outcome = 'lose';
+    } else {
+        outcome = 'draw';
+    }
+
+    console.log(humanChoice, computerChoice);
+    console.log(outcome);
+}
+
+playRound(getHumanChoice(), getComputerChoice());
