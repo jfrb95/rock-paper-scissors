@@ -1,4 +1,4 @@
-const getComputerChoice = function() {
+function getComputerChoice() {
     const roll = Math.random();
     let result = -1;
 
@@ -13,4 +13,16 @@ const getComputerChoice = function() {
     return result;
 }
 
-console.log(getComputerChoice());
+function getHumanChoice() {
+    const choice = prompt("Enter 'rock', 'paper', or 'scissors'");
+
+    if (choice === 'rock' ||
+        choice === 'paper' ||
+        choice === 'scissors') {
+            return choice;
+    } else {
+        return getHumanChoice();
+    }
+};
+
+console.log(getHumanChoice());
