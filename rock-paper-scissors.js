@@ -58,14 +58,24 @@ function playRound(humanChoice, computerChoice) {
         scoreBoard.increment(roundWinner);
     }
 
-    let score = `The scores are: Human - ${scoreBoard.getScoreOf("human")}, Computer - ${scoreBoard.getScoreOf("computer")}.`;
+    const humanScore = scoreBoard.getScoreOf("human");
+    const computerScore = scoreBoard.getScoreOf("computer")
+
+    let score = `The scores are: Human - ${humanScore}, Computer - ${computerScore}.`;
 
     const outcomeTextNode = document.createTextNode(outcomeText + " " + score);
     const lineBreak = document.createElement("br");
     resultsDisplay.appendChild(outcomeTextNode);
     resultsDisplay.appendChild(lineBreak);
 
-    return roundWinner;
+    if (humanScore >= 5) {
+        resultsDisplay.textContent = `Human wins ${humanScore} to ${computerScore}. The game has been reset.`
+        scoreBoard.resetScore();
+    } else if (computerScore >= 5) {
+        resultsDisplay.textContent = `Computer wins ${computerScore} to ${humanScore}. The game has been reset.`
+        resultsDisplay.appendChild(document.createElement("br"));
+        scoreBoard.resetScore();
+    }
 }
 
 
