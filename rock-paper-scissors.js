@@ -1,3 +1,9 @@
+//Setting up the webpage
+
+const rpsButtons = document.querySelector("#rps-buttons");
+rpsButtons.addEventListener("click", rpsEventResponse);
+
+
 function getComputerChoice() {
     const roll = Math.random();
     let result = -1;
@@ -25,51 +31,51 @@ function getHumanChoice() {
     }
 };
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
 
+function playRound(humanChoice, computerChoice) {
+    let outcomeText;
+    let roundWinner;
 
-
-    if (humanScore > computerScore) {
-        console.log(`Congratulations, you win!`);
-    } else if (computerScore > humanScore) {
-        console.log(`Unlucky! You lose.`)
+    if (humanChoice === 'rock' && computerChoice === 'scissors' ||
+        humanChoice === 'paper' && computerChoice === 'rock' ||
+        humanChoice === 'scissors' && computerChoice === 'paper') {
+            outcomeText = `You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}.`;
+            roundWinner = 'human';
+    } else if (
+        humanChoice === 'rock' && computerChoice === 'paper' ||
+        humanChoice === 'paper' && computerChoice === 'scissors' ||
+        humanChoice === 'scissors' && computerChoice === 'rock') {
+            outcomeText = `You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}.`;
+            roundWinner = 'computer';
     } else {
-        console.log(`It's a draw overall!`)
+        outcomeText = `${capitalize(computerChoice)} vs ${capitalize(humanChoice)}. It's a tie!`;
+        roundWinner = null;
     }
-
-    //Nested functions below
-
-    function playRound(humanChoice, computerChoice) {
-        let outcomeText;
-        let roundWinner;
-
-        if (humanChoice === 'rock' && computerChoice === 'scissors' ||
-            humanChoice === 'paper' && computerChoice === 'rock' ||
-            humanChoice === 'scissors' && computerChoice === 'paper') {
-                outcomeText = `You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}.`;
-                roundWinner = 'human';
-        } else if (
-            humanChoice === 'rock' && computerChoice === 'paper' ||
-            humanChoice === 'paper' && computerChoice === 'scissors' ||
-            humanChoice === 'scissors' && computerChoice === 'rock') {
-                outcomeText = `You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}.`;
-                roundWinner = 'computer';
-        } else {
-            outcomeText = `${capitalize(computerChoice)} vs ${capitalize(humanChoice)}. It's a tie!`;
-            roundWinner = null;
-        }
-
-        console.log(outcomeText);
-        return roundWinner;
-    }
+     console.log(outcomeText);
+    return roundWinner;
 }
 
-playGame();
 
 //Utility functions below
 
 function capitalize(str) {
     return str.replace(str[0], str[0].toUpperCase());
+}
+
+function rpsEventResponse(event) {
+    const target = event.target;
+
+    switch(target.id) {
+        case "rock":
+            playRound("rock", getComputerChoice());
+            break;
+        
+        case "paper":
+            playRound("paper", getComputerChoice());
+            break;
+        
+        case "scissors":
+            playRound("scissors", getComputerChoice());
+            break;
+    }
 }
