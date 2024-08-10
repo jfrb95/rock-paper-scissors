@@ -29,15 +29,7 @@ function playGame() {
     let humanScore = 0;
     let computerScore = 0;
 
-    for (let i = 1; i < 6; ++i) {
-        console.log(`Round ${i}`);
-        const result = playRound(getHumanChoice(), getComputerChoice());
-        if (result === 'human') {
-            humanScore += 1;
-        } else if (result === 'computer') {
-            computerScore += 1;
-        }
-    }
+
 
     if (humanScore > computerScore) {
         console.log(`Congratulations, you win!`);
@@ -46,6 +38,8 @@ function playGame() {
     } else {
         console.log(`It's a draw overall!`)
     }
+
+    //Nested functions below
 
     function playRound(humanChoice, computerChoice) {
         let outcomeText;
