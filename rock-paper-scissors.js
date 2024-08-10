@@ -15,11 +15,6 @@ const scoreBoard = function() {
     return {
         increment(player) {
             scores[player] += 1;
-
-            if (scores[player] >= 5) {
-                announceWinner();
-                resetScore();
-            }
         },
 
         announceWinner() {
@@ -27,8 +22,8 @@ const scoreBoard = function() {
         },
 
         resetScore() {
-            scores.human = 0;
-            scores.computer = 0;
+            scores["human"] = 0;
+            scores["computer"] = 0;
         },
 
         getScoreOf(player) {
@@ -37,33 +32,7 @@ const scoreBoard = function() {
     }
 }();
 
-function getComputerChoice() {
-    const roll = Math.random();
-    let result = -1;
-
-    if (roll < 0.33) {
-        result = "rock";
-    } else if (roll < 0.66) {
-        result = "paper";
-    } else {
-        result = "scissors";
-    }
-
-    return result;
-}
-
-function getHumanChoice() {
-    const choice = prompt("Enter 'rock', 'paper', or 'scissors'").toLowerCase();
-
-    if (choice === 'rock' ||
-        choice === 'paper' ||
-        choice === 'scissors') {
-            return choice;
-    } else {
-        return getHumanChoice();
-    }
-};
-
+//Functions used to play the game
 
 function playRound(humanChoice, computerChoice) {
     let outcomeText;
@@ -85,13 +54,13 @@ function playRound(humanChoice, computerChoice) {
         roundWinner = null;
     }
 
-    let score = "";
     if (roundWinner) {
         scoreBoard.increment(roundWinner);
-        score = " " + scoreBoard.getScoreOf(roundWinner)
     }
 
-    const outcomeTextNode = document.createTextNode(outcomeText + score);
+    let score = `The scores are: Human - ${scoreBoard.getScoreOf("human")}, Computer - ${scoreBoard.getScoreOf("computer")}.`;
+
+    const outcomeTextNode = document.createTextNode(outcomeText + " " + score);
     const lineBreak = document.createElement("br");
     resultsDisplay.appendChild(outcomeTextNode);
     resultsDisplay.appendChild(lineBreak);
@@ -123,3 +92,30 @@ function playRoundWithHumanSelecton(event) {
             break;
     }
 }
+
+function getComputerChoice() {
+    const roll = Math.random();
+    let result = -1;
+
+    if (roll < 0.33) {
+        result = "rock";
+    } else if (roll < 0.66) {
+        result = "paper";
+    } else {
+        result = "scissors";
+    }
+
+    return result;
+}
+
+function getHumanChoice() {
+    const choice = prompt("Enter 'rock', 'paper', or 'scissors'").toLowerCase();
+
+    if (choice === 'rock' ||
+        choice === 'paper' ||
+        choice === 'scissors') {
+            return choice;
+    } else {
+        return getHumanChoice();
+    }
+};
