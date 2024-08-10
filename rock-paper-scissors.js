@@ -5,6 +5,38 @@ rpsButtons.addEventListener("click", playRoundWithHumanSelecton);
 
 const resultsDisplay = document.querySelector("#results-display");
 
+const scoreBoard = function() {
+    //this function uses closure
+    let scores = {
+        "human": 0,
+        "computer": 0
+    }
+
+    return {
+        increment(player) {
+            scores[player] += 1;
+
+            if (scores[player] >= 5) {
+                announceWinner();
+                resetScore();
+            }
+        },
+
+        announceWinner() {
+
+        },
+
+        resetScore() {
+            scores.human = 0;
+            scores.computer = 0;
+        },
+
+        getScoreOf(player) {
+            return scores[player];
+        }
+    }
+}();
+
 function getComputerChoice() {
     const roll = Math.random();
     let result = -1;
@@ -53,7 +85,13 @@ function playRound(humanChoice, computerChoice) {
         roundWinner = null;
     }
 
-    const outcomeTextNode = document.createTextNode(outcomeText);
+    let score = "";
+    if (roundWinner) {
+        scoreBoard.increment(roundWinner);
+        score = " " + scoreBoard.getScoreOf(roundWinner)
+    }
+
+    const outcomeTextNode = document.createTextNode(outcomeText + score);
     const lineBreak = document.createElement("br");
     resultsDisplay.appendChild(outcomeTextNode);
     resultsDisplay.appendChild(lineBreak);
