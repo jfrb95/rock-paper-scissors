@@ -1,8 +1,9 @@
 //Setting up the webpage
 
 const rpsButtons = document.querySelector("#rps-buttons");
-rpsButtons.addEventListener("click", rpsEventResponse);
+rpsButtons.addEventListener("click", playRoundWithHumanSelecton);
 
+const resultsDisplay = document.querySelector("#results-display");
 
 function getComputerChoice() {
     const roll = Math.random();
@@ -51,7 +52,12 @@ function playRound(humanChoice, computerChoice) {
         outcomeText = `${capitalize(computerChoice)} vs ${capitalize(humanChoice)}. It's a tie!`;
         roundWinner = null;
     }
-     console.log(outcomeText);
+
+    const outcomeTextNode = document.createTextNode(outcomeText);
+    const lineBreak = document.createElement("br");
+    resultsDisplay.appendChild(outcomeTextNode);
+    resultsDisplay.appendChild(lineBreak);
+
     return roundWinner;
 }
 
@@ -62,7 +68,7 @@ function capitalize(str) {
     return str.replace(str[0], str[0].toUpperCase());
 }
 
-function rpsEventResponse(event) {
+function playRoundWithHumanSelecton(event) {
     const target = event.target;
 
     switch(target.id) {
